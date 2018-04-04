@@ -25,8 +25,13 @@ export default(state = [], action) => {
 
     // case 'ENTREE_CREATE':
     //   return state.map(menu => menu.id === payload.menuID ? {...menu, entrees: [...payload._id ] } : menu);
-    // case 'ENTREE_DELETE':
-    //   return state.map(menu => menu.id === payload.menuID ? {...menu, entrees: [...!payload._id ] } : menu);
+    case 'ENTREE_DELETE':
+      return state.map(menu => {
+        if (menu._id !== payload.menuID) return menu;
+        const { entrees } = menu;
+
+        return {...menu, entrees: entrees.filter(entree => entree._id !== payload._id) };
+      });
 
     // case 'MENU_RESET':
     //   return state = [];

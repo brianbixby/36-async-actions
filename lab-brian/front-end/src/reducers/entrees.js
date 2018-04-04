@@ -32,10 +32,18 @@ export default (state=[], action) => {
     //   validateEntree(payload);
     //   return state.map(entree => entree._id === payload._id ? payload : entree);
     case 'ENTREE_DELETE':
-      validateEntree(payload);
       return state.filter(entree => entree._id !== payload._id);
     // case 'ENTREE_RESET':
     //   return state = [];
+    case 'MENUS_FETCH': {
+      // payload => [ menus : { entrees } ]
+      let entrees = [];
+      payload.forEach(({ entrees: currentEntrees }) => {
+        entrees = [...entrees, ...currentEntrees];
+      });
+      
+      return entrees;
+    }
     default:
       return state;
   }

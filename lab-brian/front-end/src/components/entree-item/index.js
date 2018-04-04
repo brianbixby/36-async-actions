@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 
-class EntreeItem extends React.Component {
+class EntreeItem extends Component {
   render() {
+    const {
+      entree: {
+        _id,
+        name,
+        price,
+        menuID,
+      },
+      entreeDelete,
+      entree,
+    } = this.props;
+    
     return (
-      <div>
-        {this.props.entrees.map(entree =>
-          <div key={entree._id}>
-            <p> ID: {entree._id}<br/>Name: {entree.name}<br/>Price: ${entree.price}<br/>Menu ID: {entree.menuID} </p>
-            <button onClick={() => this.props.entreeDelete(entree)}>X</button>
-          </div>
-        )}
-      </div>
+      <Fragment>
+        <p> ID: {_id}<br/>Name: {name}<br/>Price: ${price}<br/>Menu ID: {menuID} </p>
+        <button onClick={() => entreeDelete()}>X</button>
+      </Fragment>
     );
   }
 }

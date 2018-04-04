@@ -33,9 +33,9 @@ export const entreeUpdate = (entree) => ({
   payload: entree,
 });
 
-export const entreeDelete = (entree) => ({
+export const entreeDelete = (ids) => ({
   type: 'ENTREE_DELETE',
-  payload: entree,
+  payload: ids,
 });
 
 // export const entreeReset = () => ({ type: 'ENTREE_RESET' });
@@ -92,10 +92,11 @@ export const entreeUpdateRequest = (entree) => (dispatch) => {
     });
 };
 
-export const entreeDeleteRequest = (entree) => (dispatch) => {
-  return superagent.delete(`${__API_URL__}/api/entree/${entree._id}`)
+export const entreeDeleteRequest = ({ _id, menuID }) => (dispatch) => {
+  console.log(`${__API_URL__}/api/entree/${menuID}/${_id}`);
+  return superagent.delete(`${__API_URL__}/api/entree/${menuID}/${_id}`)
     .then(res => {
-      dispatch(entreeDelete(entree));
+      dispatch(entreeDelete({ _id, menuID }));
       return res;
     });
 };

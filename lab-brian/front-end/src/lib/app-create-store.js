@@ -3,9 +3,11 @@ import thunk from './redux-thunk';
 import reporter from './redux-reporter';
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 const appCreateStore = () => (
-  createStore(reducer, applyMiddleware(createLogger(), thunk, reporter))
+  createStore(reducer, composeWithDevTools(applyMiddleware(createLogger(), thunk, reporter)))
 );
 
 export default appCreateStore;

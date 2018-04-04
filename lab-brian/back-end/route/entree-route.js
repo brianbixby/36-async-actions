@@ -66,3 +66,19 @@ entreeRouter.get('/api/menu/:menuID/entree', function(req, res, next) {
     .then( entrees => res.json(entrees))
     .catch( err => next(err));
 });
+
+entreeRouter.delete('/api/entree/:menuID/:entreeID/', function(req, res, next) {
+  debug('GET: /api/menu');
+  const { menuID, entreeID } = req.params;
+
+  Entree.findByIdAndRemove(entreeID)
+    .then( () => Menu.findById(menuID))
+    .then(menu => {
+      if (!menu) throw createError(404);
+      
+      menu.entrees = menu.entrees.filter(entreeId => entreeId.toString() !== entreeID);
+      return menu.save();
+    })
+    .then(() => res.sendStatus(204))
+    .catch( err => next(err));
+});
